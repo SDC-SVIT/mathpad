@@ -8,6 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import {symbols} from "./config";
 
 import EditorFile from "./EditorFile";
 import CustomListItem from "./CustomListItem";
@@ -77,123 +78,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MiniDrawer() {
-  const sn = [
-    {
-      name: "Belongs To",
-      symbol: "∈",
-    },
-    {
-      name: "Null",
-      symbol: "∅",
-    },
-    {
-      name: "For All",
-      symbol: "∀",
-    },
-    {
-      name: "There Exists",
-      symbol: "∃",
-    },
-    {
-      name: "Delta",
-      symbol: "δ",
-    },
-    {
-      name: "Conjunction",
-      symbol: "∧",
-    },
-    {
-      name: "Disjunction",
-      symbol: "∨",
-    },
-    {
-      name: "Negation",
-      symbol: "¬",
-    },
-    {
-      name: "Conditional",
-      symbol: "→",
-    },
-    {
-      name: "Biconditional",
-      symbol: "↔",
-    },
-    {
-      name: "Implication",
-      symbol: "⇒",
-    },
-    {
-      name: "Equivalence",
-      symbol: "⇔",
-    },
-
-    {
-      name: "Less then, Equal To",
-      symbol: "≤",
-    },
-    {
-      name: "Square Root",
-      symbol: "√",
-    },
-
-    {
-      name: "Subset",
-      symbol: "⊆",
-    },
-
-    {
-      name: "! Belongs To",
-      symbol: "∉",
-    },
-    {
-      name: "! Subset of",
-      symbol: "⊄",
-    },
-    {
-      name: "Union",
-      symbol: "∪",
-    },
-    {
-      name: "Intersection",
-      symbol: "∩",
-    },
-    {
-      name: "! Equals To",
-      symbol: "≠",
-    },
-    {
-      name: "Sigma",
-      symbol: "∑",
-    },
-    {
-      name: "Mu",
-      symbol: "μ",
-    },
-    {
-      name: "Alpha",
-      symbol: "α",
-    },
-    {
-      name: "Beta",
-      symbol: "β",
-    },
-    {
-      name: "Theta",
-      symbol: "θ",
-    },
-    {
-      name: "Lambda",
-      symbol: "λ",
-    },
-    {
-      name: "Pi",
-      symbol: "π",
-    },
-    {
-      name: "Alef",
-      symbol: "ℵ",
-    },
-  ];
+  const sn = symbols;
 
   const classes = useStyles();
   const theme = useTheme();
