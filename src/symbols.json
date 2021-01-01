@@ -1,0 +1,110 @@
+[
+    {
+        "name": "Conjunction",
+        "symbol": "∧"
+    },
+    {
+        "name": "Disjunction",
+        "symbol": "∨"
+    },
+    {
+        "name": "Negation",
+        "symbol": "¬"
+    },
+    {
+        "name": "Conditional",
+        "symbol": "→"
+    },
+    {
+        "name": "Biconditional",
+        "symbol": "↔"
+    },
+    {
+        "name": "Implication",
+        "symbol": "⇒"
+    },
+    {
+        "name": "Equivalence",
+        "symbol": "⇔"
+    },
+    {
+        "name": "For All",
+        "symbol": "∀"
+    },
+    {
+        "name": "There Exists",
+        "symbol": "∃"
+    },
+    {
+        "name": "Less then, Equal To",
+        "symbol": "≤"
+    },
+    {
+        "name": "Square Root",
+        "symbol": "√"
+    },
+    {
+        "name": "Null",
+        "symbol": "∅"
+    },
+    {
+        "name": "Subset",
+        "symbol": "⊆"
+    },
+    {
+        "name": "Belongs To",
+        "symbol": "∈"
+    },
+    {
+        "name": "! Belongs To",
+        "symbol": "∉"
+    },
+    {
+        "name": "! Subset of",
+        "symbol": "⊄"
+    },
+    {
+        "name": "Union",
+        "symbol": "∪"
+    },
+    {
+        "name": "Intersection",
+        "symbol": "∩"
+    },
+    {
+        "name": "! Equals To",
+        "symbol": "≠"
+    },
+    {
+        "name": "Sigma",
+        "symbol": "∑"
+    },
+    {
+        "name": "Mu",
+        "symbol": "μ"
+    },
+    {
+        "name": "Alpha",
+        "symbol": "α"
+    },
+    {
+        "name": "Beta",
+        "symbol":"β"
+    },
+    {
+        "name":"Theta",
+        "symbol":"θ"
+    },
+    {
+        "name":"Lambda",
+        "symbol":"λ"
+    },
+    {
+        "name":"Pi",
+        "symbol":"π"
+    },
+    {
+        "name":"Alef",
+        "symbol":"ℵ"
+    }
+]

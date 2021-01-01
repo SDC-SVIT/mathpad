@@ -6,6 +6,8 @@ import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import EditorFile from "./EditorFile";
 import CustomListItem from "./CustomListItem";
@@ -78,21 +80,124 @@ export default function MiniDrawer() {
 
     const sn = [
         {
-            "name":"conjunction",
-            "symbol":"∧"
-
+            "name": "Belongs To",
+            "symbol": "∈"
         },
         {
-            "name":"disjunction",
-            "symbol":"∨"
-
+            "name": "Null",
+            "symbol": "∅"
+        },
+        {
+            "name": "For All",
+            "symbol": "∀"
+        },
+        {
+            "name": "There Exists",
+            "symbol": "∃"
+        },
+        {
+            "name": "Conjunction",
+            "symbol": "∧"
+        },
+        {
+            "name": "Disjunction",
+            "symbol": "∨"
+        },
+        {
+            "name": "Negation",
+            "symbol": "¬"
+        },
+        {
+            "name": "Conditional",
+            "symbol": "→"
+        },
+        {
+            "name": "Biconditional",
+            "symbol": "↔"
+        },
+        {
+            "name": "Implication",
+            "symbol": "⇒"
+        },
+        {
+            "name": "Equivalence",
+            "symbol": "⇔"
+        },
+        
+        {
+            "name": "Less then, Equal To",
+            "symbol": "≤"
+        },
+        {
+            "name": "Square Root",
+            "symbol": "√"
+        },
+       
+        {
+            "name": "Subset",
+            "symbol": "⊆"
+        },
+       
+        {
+            "name": "! Belongs To",
+            "symbol": "∉"
+        },
+        {
+            "name": "! Subset of",
+            "symbol": "⊄"
+        },
+        {
+            "name": "Union",
+            "symbol": "∪"
+        },
+        {
+            "name": "Intersection",
+            "symbol": "∩"
+        },
+        {
+            "name": "! Equals To",
+            "symbol": "≠"
+        },
+        {
+            "name": "Sigma",
+            "symbol": "∑"
+        },
+        {
+            "name": "Mu",
+            "symbol": "μ"
+        },
+        {
+            "name": "Alpha",
+            "symbol": "α"
+        },
+        {
+            "name": "Beta",
+            "symbol":"β"
+        },
+        {
+            "name":"Theta",
+            "symbol":"θ"
+        },
+        {
+            "name":"Lambda",
+            "symbol":"λ"
+        },
+        {
+            "name":"Pi",
+            "symbol":"π"
+        },
+        {
+            "name":"Alef",
+            "symbol":"ℵ"
         }
-    ]
+    ];
+    
 
 
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const editorRef = React.useRef(null);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -107,29 +212,6 @@ export default function MiniDrawer() {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            {/*<AppBar*/}
-            {/*    position="fixed"*/}
-            {/*    className={clsx(classes.appBar, {*/}
-            {/*        [classes.appBarShift]: open,*/}
-            {/*    })}*/}
-            {/*>*/}
-            {/*    <Toolbar>*/}
-            {/*        <IconButton*/}
-            {/*            color="inherit"*/}
-            {/*            aria-label="open drawer"*/}
-            {/*            onClick={handleDrawerOpen}*/}
-            {/*            edge="start"*/}
-            {/*            className={clsx(classes.menuButton, {*/}
-            {/*                [classes.hide]: open,*/}
-            {/*            })}*/}
-            {/*        >*/}
-            {/*            <h1>1</h1>*/}
-            {/*        </IconButton>*/}
-            {/*        <Typography variant="h6" noWrap>*/}
-            {/*            Mini variant drawer*/}
-            {/*        </Typography>*/}
-            {/*    </Toolbar>*/}
-            {/*</AppBar>*/}
             <Drawer
                 variant="permanent"
                 className={clsx(classes.drawer, {
@@ -145,13 +227,13 @@ export default function MiniDrawer() {
             >
                 <div className={classes.toolbar}>
                     <IconButton onClick={handleDrawerToggle}>
-                        {theme.direction === 'rtl' ? <h1>1</h1> : <h1>1</h1>}
+                        {!open? <MenuIcon /> : <ChevronLeftIcon />}
                     </IconButton>
                 </div>
                 <Divider />
                 <List>
                     {sn.map((text, index) => (
-                       <CustomListItem name={text.name} symbol={text.symbol} open={open}/>
+                       <CustomListItem name={text.name} symbol={text.symbol} open={open} editor={editorRef}/>
                     ))}
                 </List>
                 {/*<Divider />*/}
@@ -166,7 +248,7 @@ export default function MiniDrawer() {
             </Drawer>
             <main className={classes.content}>
                 {/*<div className={classes.toolbar} />*/}
-                <EditorFile/>
+                <EditorFile ref={editorRef}/>
             </main>
         </div>
     );

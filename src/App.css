@@ -8,6 +8,8 @@
 
 .demo-editor{
     margin-top: 10px;
-    background-color: aqua;
-
+    border-style: solid;
+    border-width: thin;
+    min-height: 80vh;
+    font-size: 24px;
 }
