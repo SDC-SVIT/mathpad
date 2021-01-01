@@ -53,6 +53,7 @@ export default class ControlledEditor extends Component {
     }
 
     // Lord if u exist plij forgive me for dis.
+    //OK dis works but cannot apply inline stylez
     onEditorStateChange = (editorState) => {
         var contentNow = editorState.getCurrentContent().getPlainText();
         if (contentNow !== this.state.editorText) {
@@ -96,9 +97,11 @@ export default class ControlledEditor extends Component {
         }
         else if(this.state.inlineStyle !== editorState.getCurrentInlineStyle()){
             console.log("In INline STyle Change");
-            console.log(editorState.getCurrentInlineStyle().toString());
+            console.log(editorState.getCurrentInlineStyle().toList().toString());
+            const contentState = Modifier.applyInlineStyle(editorState.getCurrentContent(), editorState.getSelection(), editorState.getCurrentInlineStyle().first());
+            console.log(contentState.getCurrentInlineStyle)
             this.setState({
-                editorState: editorState,
+                editorState: EditorState.push(editorState, contentState, "change-inline-style"),
                 editorText: contentNow,
                 inlineStyle: editorState.getCurrentInlineStyle()
             });
