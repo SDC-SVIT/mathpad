@@ -12,6 +12,7 @@ import {symbols} from "./config";
 
 import EditorFile from "./EditorFile";
 import CustomListItem from "./CustomListItem";
+import TinyEditor from './TinyEditor';
 
 const drawerWidth = 240;
 
@@ -139,7 +140,7 @@ export default function MiniDrawer() {
       </Drawer>
       <main className={classes.content}>
         {/*<div className={classes.toolbar} />*/}
-        <EditorFile ref={editorRef} />
+        <TinyEditor ref={editorRef} />
       </main>
     </div>
   );
