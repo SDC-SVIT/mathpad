@@ -24,6 +24,42 @@ export default class ControlledEditor extends Component {
         this.sendTextToEditor("");
     }
 
+    replaceString = (chars, editorState) => {
+        const contentState = editorState.getCurrentContent();
+        const selectionState = editorState.getSelection();
+        const block = contentState.getBlockForKey( selectionState.getAnchorKey() );
+
+        this.shortcuts.forEach((val) => {
+            const SC =  val.shortcut;
+        const SYM = val.symbol;
+        // Detect a match. Can be substituted with a RegEx test condition.
+        if ( block.getText().indexOf( SC ) !== -1 ) {
+            const currentSelectionState = this.state.editorState.getSelection();
+    
+            const newContentState = Modifier.replaceText(
+                contentState,
+                // The text to replace, which is represented as a range with a start & end offset.
+                selectionState.merge( {
+                    // The starting position of the range to be replaced.
+                    anchorOffset: currentSelectionState.getEndOffset() - SC.length,
+                    // The end position of the range to be replaced.
+                    focusOffset: currentSelectionState.getEndOffset()
+                } ),
+                // The new string to replace the old string.
+               SYM
+            );
+    
+            this.setState( {
+                editorState: EditorState.push(
+                    editorState,
+                    newContentState,
+                    'replace-text'
+                )
+            } )
+        }
+    });
+    }
+
     focusEditor = () => {
         if (this.editor) {
             //   this.editor.focusEditor();
@@ -56,33 +92,30 @@ export default class ControlledEditor extends Component {
     //OK dis works but cannot apply inline stylez
     onEditorStateChange = (editorState) => {
         var contentNow = editorState.getCurrentContent().getPlainText();
-        if (contentNow !== this.state.editorText) {
-            this.shortcuts.forEach((val) => {
-                contentNow = contentNow.replace(val.shortcut, val.symbol);
-            });
-            contentNow = contentNow.replace("Ayaan", "Genius");
+        // if (contentNow !== this.state.editorText) {
+            // contentNow = contentNow.replace("Ayaan", "Genius");
             // var cs = ContentState.createFromText(contentNow);
             // const currentSelection = editorState.getSelection();
-            let currentContent = editorState.getCurrentContent();
-            const firstBlock = currentContent.getBlockMap().first();
-            const lastBlock = currentContent.getBlockMap().last();
-            const firstBlockKey = firstBlock.getKey();
-            const lastBlockKey = lastBlock.getKey();
-            const lengthOfLastBlock = lastBlock.getLength();
+            // let currentContent = editorState.getCurrentContent();
+            // const firstBlock = currentContent.getBlockMap().first();
+            // const lastBlock = currentContent.getBlockMap().last();
+            // const firstBlockKey = firstBlock.getKey();
+            // const lastBlockKey = lastBlock.getKey();
+            // const lengthOfLastBlock = lastBlock.getLength();
           
-            let newSelection = new SelectionState({
-              anchorKey: firstBlockKey,
-              anchorOffset: 0,
-              focusKey: lastBlockKey,
-              focusOffset: lengthOfLastBlock
-            });
-            const newContent = Modifier.replaceText(
-                editorState.getCurrentContent(),
-                newSelection,
-                contentNow,
-                editorState.getCurrentInlineStyle()
-            );
-            const stateWithContent = EditorState.createWithContent(newContent);
+            // let newSelection = new SelectionState({
+            //   anchorKey: firstBlockKey,
+            //   anchorOffset: 0,
+            //   focusKey: lastBlockKey,
+            //   focusOffset: lengthOfLastBlock
+            // });
+            // const newContent = Modifier.replaceText(
+            //     editorState.getCurrentContent(),
+            //     newSelection,
+            //     contentNow,
+            //     editorState.getCurrentInlineStyle()
+            // );
+            // const stateWithContent = EditorState.createWithContent(newContent);
             
             // let updateSelection = stateWithContent.getSelection().merge({
             //     anchorOffset: currentSelection.getAnchorOffset(),
@@ -90,22 +123,22 @@ export default class ControlledEditor extends Component {
             //     isBackward: true,
             //   })
             this.setState({
-                editorState: EditorState.forceSelection(stateWithContent, newContent.getSelectionAfter()),
+                editorState: editorState,
                 editorText: contentNow,
-                inlineStyle: stateWithContent.getCurrentInlineStyle()
+                // inlineStyle: stateWithContent.getCurrentInlineStyle()
             });
-        }
-        else if(this.state.inlineStyle !== editorState.getCurrentInlineStyle()){
-            console.log("In INline STyle Change");
-            console.log(editorState.getCurrentInlineStyle().toList().toString());
-            const contentState = Modifier.applyInlineStyle(editorState.getCurrentContent(), editorState.getSelection(), editorState.getCurrentInlineStyle().first());
-            console.log(contentState.getCurrentInlineStyle)
-            this.setState({
-                editorState: EditorState.push(editorState, contentState, "change-inline-style"),
-                editorText: contentNow,
-                inlineStyle: editorState.getCurrentInlineStyle()
-            });
-        }
+        // }
+        // else if(this.state.inlineStyle !== editorState.getCurrentInlineStyle()){
+        //     console.log("In INline STyle Change");
+        //     console.log(editorState.getCurrentInlineStyle().toList().toString());
+        //     const contentState = Modifier.applyInlineStyle(editorState.getCurrentContent(), editorState.getSelection(), editorState.getCurrentInlineStyle().first());
+        //     console.log(contentState.getCurrentInlineStyle)
+        //     this.setState({
+        //         editorState: EditorState.push(editorState, contentState, "change-inline-style"),
+        //         editorText: contentNow,
+        //         inlineStyle: editorState.getCurrentInlineStyle()
+        //     });
+        // }
     };
 
     render() {
@@ -115,6 +148,7 @@ export default class ControlledEditor extends Component {
                 <Editor
                     ref={this.editorRef}
                     editorState={editorState}
+                    handleBeforeInput={ this.replaceString }
                     toolbarClassName="demo-toolbar"
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
