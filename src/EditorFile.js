@@ -10,9 +10,10 @@ export default class ControlledEditor extends Component {
     constructor(props) {
         super(props);
         this.editorRef = React.createRef();
+
         this.state = {
             editorState: EditorState.createEmpty(),
-            editorText: "",
+            editorText: '',
             inlineStyle: new Set(),
         };
         this.shortcuts = shortCuts;
@@ -20,7 +21,11 @@ export default class ControlledEditor extends Component {
     }
 
     componentDidMount = () => {
-        this.sendTextToEditor(this.state.editorText);
+       // var text = localStorage.getItem('editorText') === 'true'?localStorage.getItem('editorText'):'';
+      //  console.log("In component did mount ",localStorage.getItem('editorText') === 'true')
+        this.sendTextToEditor(localStorage.getItem('editorText'));
+        //Content getting
+        console.log("In component did mount",localStorage.getItem('editorText'))
     }
 
     replaceString = (chars, editorState) => {
@@ -34,8 +39,6 @@ export default class ControlledEditor extends Component {
         // Detect a match. Can be substituted with a RegEx test condition.
         if ( block.getText().indexOf(SC) !== -1 ) {
             const currentSelectionState = this.state.editorState.getSelection();
-                console.log("My boi called!")
-    
             const newContentState = Modifier.replaceText(
                 contentState,
                 // The text to replace, which is represented as a range with a start & end offset.
@@ -48,7 +51,7 @@ export default class ControlledEditor extends Component {
                 // The new string to replace the old string.
                SYM
             );
-    
+
             this.setState( {
                 editorState: EditorState.push(
                     editorState,
@@ -90,10 +93,13 @@ export default class ControlledEditor extends Component {
 
     onEditorStateChange = (editorState) => {
         var contentNow = editorState.getCurrentContent().getPlainText();
+        localStorage.setItem('editorText', contentNow);
             this.setState({
                 editorState: editorState,
                 editorText: contentNow,
             });
+
+        console.log("In editor state change",localStorage.getItem('editorText') === 'true')
     };
 
     render() {
