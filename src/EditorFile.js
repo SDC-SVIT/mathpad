@@ -3,6 +3,7 @@ import { EditorState, ContentState, Modifier, SelectionState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { shortCuts } from "./config";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import CustomOption from "./CustomOption.js";
 
 
 export default class ControlledEditor extends Component {
@@ -15,13 +16,11 @@ export default class ControlledEditor extends Component {
             inlineStyle: new Set(),
         };
         this.shortcuts = shortCuts;
-        // setTimeout(()=>{
-        //     this.sendTextToEditor("My bich is itching")
-        // }, 2000);
+        this.options = ['inline', 'blockType', 'fontSize', 'fontFamily', 'textAlign', 'emoji', 'history'];
     }
 
     componentDidMount = () => {
-        this.sendTextToEditor("");
+        this.sendTextToEditor(this.state.editorText);
     }
 
     replaceString = (chars, editorState) => {
@@ -33,8 +32,9 @@ export default class ControlledEditor extends Component {
             const SC =  val.shortcut;
         const SYM = val.symbol;
         // Detect a match. Can be substituted with a RegEx test condition.
-        if ( block.getText().indexOf( SC ) !== -1 ) {
+        if ( block.getText().indexOf(SC) !== -1 ) {
             const currentSelectionState = this.state.editorState.getSelection();
+                console.log("My boi called!")
     
             const newContentState = Modifier.replaceText(
                 contentState,
@@ -88,57 +88,12 @@ export default class ControlledEditor extends Component {
         return EditorState.forceSelection(newEditorState, newContent.getSelectionAfter());
     }
 
-    // Lord if u exist plij forgive me for dis.
-    //OK dis works but cannot apply inline stylez
     onEditorStateChange = (editorState) => {
         var contentNow = editorState.getCurrentContent().getPlainText();
-        // if (contentNow !== this.state.editorText) {
-            // contentNow = contentNow.replace("Ayaan", "Genius");
-            // var cs = ContentState.createFromText(contentNow);
-            // const currentSelection = editorState.getSelection();
-            // let currentContent = editorState.getCurrentContent();
-            // const firstBlock = currentContent.getBlockMap().first();
-            // const lastBlock = currentContent.getBlockMap().last();
-            // const firstBlockKey = firstBlock.getKey();
-            // const lastBlockKey = lastBlock.getKey();
-            // const lengthOfLastBlock = lastBlock.getLength();
-          
-            // let newSelection = new SelectionState({
-            //   anchorKey: firstBlockKey,
-            //   anchorOffset: 0,
-            //   focusKey: lastBlockKey,
-            //   focusOffset: lengthOfLastBlock
-            // });
-            // const newContent = Modifier.replaceText(
-            //     editorState.getCurrentContent(),
-            //     newSelection,
-            //     contentNow,
-            //     editorState.getCurrentInlineStyle()
-            // );
-            // const stateWithContent = EditorState.createWithContent(newContent);
-            
-            // let updateSelection = stateWithContent.getSelection().merge({
-            //     anchorOffset: currentSelection.getAnchorOffset(),
-            //     focusOffset: currentSelection.getFocusOffset(),
-            //     isBackward: true,
-            //   })
             this.setState({
                 editorState: editorState,
                 editorText: contentNow,
-                // inlineStyle: stateWithContent.getCurrentInlineStyle()
             });
-        // }
-        // else if(this.state.inlineStyle !== editorState.getCurrentInlineStyle()){
-        //     console.log("In INline STyle Change");
-        //     console.log(editorState.getCurrentInlineStyle().toList().toString());
-        //     const contentState = Modifier.applyInlineStyle(editorState.getCurrentContent(), editorState.getSelection(), editorState.getCurrentInlineStyle().first());
-        //     console.log(contentState.getCurrentInlineStyle)
-        //     this.setState({
-        //         editorState: EditorState.push(editorState, contentState, "change-inline-style"),
-        //         editorText: contentNow,
-        //         inlineStyle: editorState.getCurrentInlineStyle()
-        //     });
-        // }
     };
 
     render() {
@@ -146,6 +101,11 @@ export default class ControlledEditor extends Component {
         return (
             <div>
                 <Editor
+                    toolbar={{
+                        options: this.options,
+                        list: { inDropdown: true },
+                        textAlign: { inDropdown: true },
+                      }}
                     ref={this.editorRef}
                     editorState={editorState}
                     handleBeforeInput={ this.replaceString }
@@ -153,6 +113,7 @@ export default class ControlledEditor extends Component {
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
                     onEditorStateChange={this.onEditorStateChange}
+                    toolbarCustomButtons={[<CustomOption />]}
                 />
             </div>
 

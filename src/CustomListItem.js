@@ -15,8 +15,6 @@ function CustomListItem(props) {
     var title = shortCuts.filter(v =>
         v.symbol === props.symbol
     )[0].shortcut;
-    console.log(title);
-
     const classes = useStyles();
     const customCopy = () => {
         copy(props.symbol);
