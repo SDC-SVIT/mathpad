@@ -201,7 +201,7 @@ export const symbols = [
       symbol: "≠",
     },
     {
-      shortcut: "\\sigma",
+      shortcut: "\\sig",
       symbol: "∑",
     },
     {
@@ -221,7 +221,7 @@ export const symbols = [
       symbol: "θ",
     },
     {
-      shortcut: "\\lambda",
+      shortcut: "\\lamb",
       symbol: "λ",
     },
     {
